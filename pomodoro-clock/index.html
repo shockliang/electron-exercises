@@ -26,7 +26,44 @@
 </head>
 
 <body>
+    <div id="combo">
+        Please select the number of clocks from the drop down that you want to use and then click submit.
+        <select name="Number of Clocks" id="clocks">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+        </select>
+        <br>
+        <br>
+        <input align="center" type="button" value="Submit" onclick="myFunction();">
+        <div id="container" class="container">
+            <audio id="audio" src="alarm.mp3" autostart="false"></audio>
+        </div>
+        <div id="anotherClock" align="center" style="margin-top:10px" hidden="true">
+            <button id="btnAddClock" type="button" onclick="addClock()">Add another clock</button>
+        </div>
+        <script src="index.js"></script>
+        <script type="text/javascript">
+            var id = 0;
+            function myFunction() {
+                combo.hidden = true;
+                var appendString = document.createComment("div");
+                anotherClock.hidden = false;
+                var totalClocks = document.getElementById('clocks').value;
+                for (let i = 0; i <= totalClocks; i++) {
+                    
+                }
+            }
+        </script>
 
+    </div>
 </body>
 
 </html>
