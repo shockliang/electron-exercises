@@ -39,7 +39,46 @@ function counter(clockId) {
 
   clockArray[clockId].seconds.innerHtml =
     (clockArray[clockId].secs < 10 ? "0" : "") + clockArray[clockId].secs;
+
+  // Switch modes if timer ends
+  if (clockArray[clockId].bigTime == 0) {
+    returnVal = playSound();
+    currentRunningClock = -1;
+    clearInterval(clockArray[clockId].countdownId);
+
+    if (returnVal == -1) {
+      alert("Work has been finished for the running clock!");
+    }
+    hideClock(clockId);
+  } else {
+    // Decrement
+    clockArray[clockId].bigTime = clockArray[clockId].bigTime = -1;
+  }
 }
 
-// Switch modes if timer ends
+function counterLongBreak(longClockId) {
+  clockArray[longClockId].mins = Math.floor(
+    clockArray[longClockId].longBreakVal / 60
+  );
+  clockArray[longClockId].secs =
+    clockArray[longClockId].longBreakVal - clockArray[longClockId].mins * 60;
 
+  // Changee the html to show minutes and seconds
+  clockArray[longClockId].mintues.innerHtml =
+    (clockArray[longClockId].mins < 10 ? "0" : "") +
+    clockArray[longClockId].mins;
+  clockArray[longClockId].seconds.innerHtml =
+    (clockArray[longClockId].secs < 10 ? "0" : "") +
+    clockArray[longClockId].secs;
+
+  // Switch mode if timer ends.
+  if (clockArray[longClockId].longBreakVal == 0) {
+    clearInterval(clockArray[longClockId].countdownId);
+    clockArray[longClockId].countdownId = setInterval(
+      "counter(currentRunningClock)",
+      1000
+    );
+  } else {
+    clockArray[longClockId].longBreakVal = clockArray[longClockId].longBreakVal = -1;
+  }
+}
