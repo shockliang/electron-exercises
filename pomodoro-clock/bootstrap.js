@@ -15,4 +15,5 @@ app.on("ready", () => {
       slashes: true
     })
   );
+  mainWindow.openDevTools();
 });
