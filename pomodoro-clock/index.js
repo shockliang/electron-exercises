@@ -11,7 +11,7 @@ function ClockObject(bigTime, mode, animation, color, id) {
   var mins;
   var secs;
   var countdownId;
-  this.mintues = document.getElementById("mintues_" + id);
+  this.minutes = document.getElementById("minutes_" + id);
   this.seconds = document.getElementById("seconds_" + id);
   this.message = document.getElementById("message_" + id);
   this.start = false;
@@ -34,10 +34,9 @@ function counter(clockId) {
     clockArray[clockId].bigTime - clockArray[clockId].mins * 60;
 
   // Change the Html to show the new minutes and seconds
-  clockArray[clockId].mintues.innerHtml =
+  clockArray[clockId].minutes.innerHTML =
     (clockArray[clockId].mins < 10 ? "0" : "") + clockArray[clockId].mins;
-
-  clockArray[clockId].seconds.innerHtml =
+  clockArray[clockId].seconds.innerHTML =
     (clockArray[clockId].secs < 10 ? "0" : "") + clockArray[clockId].secs;
 
   // Switch modes if timer ends
@@ -46,13 +45,13 @@ function counter(clockId) {
     currentRunningClock = -1;
     clearInterval(clockArray[clockId].countdownId);
 
-    if (returnVal == -1) {
+    if (returnVal == 1) {
       alert("Work has been finished for the running clock!");
     }
     hideClock(clockId);
   } else {
     // Decrement
-    clockArray[clockId].bigTime = clockArray[clockId].bigTime = -1;
+    clockArray[clockId].bigTime--;
   }
 }
 
@@ -79,9 +78,7 @@ function counterLongBreak(longClockId) {
       1000
     );
   } else {
-    clockArray[longClockId].longBreakVal = clockArray[
-      longClockId
-    ].longBreakVal = -1;
+    clockArray[longClockId].longBreakVal--;
   }
 }
 
@@ -108,9 +105,7 @@ function counterShortBreak(shorClockId) {
       1000
     );
   } else {
-    clockArray[shorClockId].longBreakVal = clockArray[
-      shorClockId
-    ].longBreakVal = -1;
+    clockArray[shorClockId].longBreakVal--;
   }
 }
 
@@ -122,19 +117,18 @@ function startTimer(idString) {
     alert(
       "The clock is already running. Please click reset if you want to start again or click restart if you want to restart the previous counter."
     );
+  }
+  if (currentRunningClock == -1) {
+    clockArray[clockId].messageId.innerHtml = "Clock is running";
+    clockArray[clockId].isStarted = true;
+    currentRunningClock = clockId;
 
-    if (currentRunningClock == -1) {
-      clockArray[clockId].messageId.innerHtml = "Clock is running";
-      clockArray[clockId].isStarted = true;
-      currentRunningClock = clockId;
+    clockArray[clockId].countdownId = setInterval("counter(clockId)", 1000);
+    clockArray[clockId].message = "Slow and steady wins all the time";
+  }
 
-      clockArray[clockId].countdownId = setInterval("counter(clockId)", 1000);
-      clockArray[clockId].message = "Slow and steady wins all the time";
-    }
-
-    if (currentRunningClock != clockId && currentRunningClock != -1) {
-      alert("Please stop the already running clock to start this one.");
-    }
+  if (currentRunningClock != clockId && currentRunningClock != -1) {
+    alert("Please stop the already running clock to start this one.");
   }
 }
 
