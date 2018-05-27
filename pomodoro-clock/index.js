@@ -79,6 +79,65 @@ function counterLongBreak(longClockId) {
       1000
     );
   } else {
-    clockArray[longClockId].longBreakVal = clockArray[longClockId].longBreakVal = -1;
+    clockArray[longClockId].longBreakVal = clockArray[
+      longClockId
+    ].longBreakVal = -1;
   }
+}
+
+function counterLongBreak(shorClockId) {
+  clockArray[shorClockId].mins = Math.floor(
+    clockArray[shorClockId].longBreakVal / 60
+  );
+  clockArray[shorClockId].secs =
+    clockArray[shorClockId].longBreakVal - clockArray[shorClockId].mins * 60;
+
+  // Changee the html to show minutes and seconds
+  clockArray[shorClockId].mintues.innerHtml =
+    (clockArray[shorClockId].mins < 10 ? "0" : "") +
+    clockArray[shorClockId].mins;
+  clockArray[shorClockId].seconds.innerHtml =
+    (clockArray[shorClockId].secs < 10 ? "0" : "") +
+    clockArray[shorClockId].secs;
+
+  // Switch mode if timer ends.
+  if (clockArray[shorClockId].longBreakVal == 0) {
+    clearInterval(clockArray[shorClockId].countdownId);
+    clockArray[shorClockId].countdownId = setInterval(
+      "counter(currentRunningClock)",
+      1000
+    );
+  } else {
+    clockArray[shorClockId].longBreakVal = clockArray[
+      shorClockId
+    ].longBreakVal = -1;
+  }
+}
+
+// Actions
+
+function startTimer(idString) {
+  clockId = idString.replace(/^\D+/g, "");
+  if (currentRunningClock == clockId) {
+    alert(
+      "The clock is already running. Please click reset if you want to start again or click restart if you want to restart the previous counter."
+    );
+
+    if (currentRunningClock == -1) {
+      clockArray[clockId].messageId.innerHtml = "Clock is running";
+      clockArray[clockId].isStarted = true;
+      currentRunningClock = clockId;
+
+      clockArray[clockId].countdownId = setInterval("counter(clockId)", 1000);
+      clockArray[clockId].message = "Slow and steady wins all the time";
+    }
+
+    if (currentRunningClock != clockId && currentRunningClock != -1) {
+      alert("Please stop the already running clock to start this one.");
+    }
+  }
+}
+
+function restartTimer(idString) {
+    
 }
