@@ -85,7 +85,7 @@ function counterLongBreak(longClockId) {
   }
 }
 
-function counterLongBreak(shorClockId) {
+function counterShortBreak(shorClockId) {
   clockArray[shorClockId].mins = Math.floor(
     clockArray[shorClockId].longBreakVal / 60
   );
@@ -139,5 +139,56 @@ function startTimer(idString) {
 }
 
 function restartTimer(idString) {
-    
+  clockRestartedId = idString.replace(/^\D+/g, "");
+
+  if (currentRunningClock == clockRestartedId) {
+    if (clockArray[clockRestartedId].isStarted == false) {
+      clockArray[clockRestartedId].messageId.innerHtml = "Clock is running";
+      clockArray[clockRestartedId].isStarted = true;
+      clearInterval(clockArray[currentRunningClock].countdownId);
+      currentRunningClock = clockRestartedId;
+      clockArray[clockRestartedId].countdownId = setInterval(
+        "counter(clockRestartedI)",
+        1000
+      );
+    } else {
+      alert("This clock is already running");
+    }
+  } else {
+    alert("This clock is not running");
+  }
 }
+
+function longBreak(idString) {
+  clocklongBreakId = idString.replace(/^\D+/g, "");
+  clockArray[longBreakId].isStarted = false;
+  if (clocklongBreakId == currentRunningClock) {
+    clockArray[clocklongBreakId].messageId.innerHtml = "Long Break";
+    clockArray[clocklongBreakId].longBreakVal = 600;
+    clockArray[clocklongBreakId].shortBreakVal = 300;
+    clearInterval(clockArray[clocklongBreakId].countdownId);
+    clockArray[clocklongBreakId].countdownId = setInterval(
+      "counterLongBreak(clockLongBreakId)",
+      1000
+    );
+  } else {
+    alert("This clock is not running");
+  }
+}
+
+function shortBreak(idString) {
+    clocklongBreakId = idString.replace(/^\D+/g, "");
+    clockArray[longBreakId].isStarted = false;
+    if (clocklongBreakId == currentRunningClock) {
+      clockArray[clocklongBreakId].messageId.innerHtml = "Short Break";
+      clockArray[clocklongBreakId].longBreakVal = 600;
+      clockArray[clocklongBreakId].shortBreakVal = 300;
+      clearInterval(clockArray[clocklongBreakId].countdownId);
+      clockArray[clocklongBreakId].countdownId = setInterval(
+        "counterShortBreak(clocklongBreakId)",
+        1000
+      );
+    } else {
+      alert("This clock is not running");
+    }
+  }
