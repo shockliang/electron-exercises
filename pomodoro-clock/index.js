@@ -177,18 +177,58 @@ function longBreak(idString) {
 }
 
 function shortBreak(idString) {
-    clocklongBreakId = idString.replace(/^\D+/g, "");
-    clockArray[longBreakId].isStarted = false;
-    if (clocklongBreakId == currentRunningClock) {
-      clockArray[clocklongBreakId].messageId.innerHtml = "Short Break";
-      clockArray[clocklongBreakId].longBreakVal = 600;
-      clockArray[clocklongBreakId].shortBreakVal = 300;
-      clearInterval(clockArray[clocklongBreakId].countdownId);
-      clockArray[clocklongBreakId].countdownId = setInterval(
-        "counterShortBreak(clocklongBreakId)",
-        1000
-      );
-    } else {
-      alert("This clock is not running");
-    }
+  clocklongBreakId = idString.replace(/^\D+/g, "");
+  clockArray[longBreakId].isStarted = false;
+  if (clocklongBreakId == currentRunningClock) {
+    clockArray[clocklongBreakId].messageId.innerHtml = "Short Break";
+    clockArray[clocklongBreakId].longBreakVal = 600;
+    clockArray[clocklongBreakId].shortBreakVal = 300;
+    clearInterval(clockArray[clocklongBreakId].countdownId);
+    clockArray[clocklongBreakId].countdownId = setInterval(
+      "counterShortBreak(clocklongBreakId)",
+      1000
+    );
+  } else {
+    alert("This clock is not running");
   }
+}
+
+function stopTimer(idString) {
+  clockId = idString.replace(/^\D+/g, "");
+  if (clockId == currentRunningClock) {
+    clockArray[clockId].mintues.innerHtml = "25";
+    clockArray[clockId].seconds.innerHtml = "00";
+    clearInterval(clockArray[clockId].countdownId);
+    clockArray[clockId].bigTime = 1499;
+    currentRunningClock = -1;
+  } else {
+    clockId = currentRunningClock;
+    alert("This clock is not running.");
+  }
+}
+
+function resetTimer(idString) {
+  clockResetId = idString.replace(/^\D+/g, "");
+  clockArray[clockResetId].bigTime = 1499;
+  clockArray[clockResetId].mintues.innerHtml = "25";
+  clockArray[clockResetId].seconds.innerHtml = "00";
+  if (currentRunningClock > 0) {
+    clearInterval(clockArray[clockResetId].countdownId);
+  }
+  currentRunningClock = -1;
+}
+
+function hideClock(idString) {
+  closeId = "clock_" + idString.replace(/^\D+/g, "");
+  closeClockId = idString.replace(/^\D+/g, "");
+  if (currentRunningClock == closeClockId) {
+    currentRunningClock = -1;
+  }
+  document.getElementById(closeId).style.display = none;
+}
+
+function playSound() {
+  var sound = document.getElementById("audio");
+  sound.play();
+  return 1;
+}
