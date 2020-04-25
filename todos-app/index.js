@@ -18,6 +18,7 @@ function createAddWindow() {
     height: 200,
     title: 'Add New Todo',
     webPreferences: {nodeIntegration: true}});
+  addWindow.loadURL(`file://${__dirname}/add.html`);
 }
 
 const menuTemplate = [
