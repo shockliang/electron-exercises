@@ -29,6 +29,10 @@ ipcMain.on('todo:add', (event, todo) => {
   addWindow.close();
 });
 
+function clearTodos() {
+  mainWindow.webContents.send('todo:clear');
+}
+
 const menuTemplate = [
   {
     label: 'File',
@@ -38,6 +42,12 @@ const menuTemplate = [
         accelerator: process.platform === 'darwin' ? 'Command+N' : 'Ctrl+N',
         click() {
           createAddWindow();
+        }
+      },
+      {
+        label: 'Clear Todos',
+        click() {
+          clearTodos();
         }
       },
       {
