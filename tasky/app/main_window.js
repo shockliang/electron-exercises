@@ -10,6 +10,7 @@ class MainWindow extends BrowserWindow {
       resizable: false,
       show: false,
       webPreferences: {
+        backgroundThrottling: false,
         nodeIntegration: true
       }
     });
