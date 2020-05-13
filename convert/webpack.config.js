@@ -4,10 +4,10 @@ const fs = require('fs');
 
 const nodeModules = {};
 fs.readdirSync('node_modules')
-  .filter(function(x) {
+  .filter(function (x) {
     return ['.bin'].indexOf(x) === -1;
   })
-  .forEach(function(mod) {
+  .forEach(function (mod) {
     nodeModules[mod] = 'commonjs ' + mod;
   });
 
@@ -23,12 +23,22 @@ module.exports = {
     filename: 'bundle.js'
   },
   module: {
-    loaders: [
+    rules: [
       {
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        loader: 'babel-loader',
-        query: {
-          presets: ['react', 'es2015', 'stage-1']
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              '@babel/preset-env',
+              '@babel/react',
+              {
+                plugins: [
+                  '@babel/plugin-proposal-class-properties'
+                ]
+              }]
+          }
         }
       },
     ]
