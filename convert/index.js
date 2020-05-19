@@ -31,3 +31,13 @@ ipcMain.on('videos:added', (event, videos) => {
   Promise.all(promises)
     .then(results => mainWindow.webContents.send('metadata:complete', results));
 });
+
+ipcMain.on('conversion:start', (event, videos) => {
+  const videoAry = _.values(videos);
+  console.log(videoAry);
+  const video = videoAry[0];
+  const outputDirectory = video.path.split(video.name)[0];
+  const outputName = video.name.split('.')[0];
+  const outputPath =`${outputDirectory}${outputName}.${video.format}`;
+  console.log(outputPath);
+});
