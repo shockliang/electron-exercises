@@ -16,6 +16,10 @@ export const addVideos = videos => dispatch => {
 // conversion.
 export const convertVideos = () => (dispatch, getState) => {
   ipcRenderer.send('conversion:start', getState().videos);
+
+  ipcRenderer.on('conversion:end', (event, {video, outputPath}) => {
+    dispatch({type: VIDEO_COMPLETE, payload: {...video, outputPath}});
+  });
 };
 
 // TODO: Open the folder that the newly created video
